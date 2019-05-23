@@ -27,6 +27,13 @@
 			<artifactId>h2</artifactId>
 			<version>1.4.197</version>
 		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.9.5</version>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 	<build>
 		<plugins>
@@ -36,7 +43,12 @@
 				<version>2.15</version>
 				<configuration>
 					<environmentVariables>
-						<SENDGRID_USERNAME>val</SENDGRID_USERNAME>
+						<LOG_TYPE_RUN>CONSOLE,FILE,DATABASE</LOG_TYPE_RUN>
+						<FOLDER_FILE_LOG>C:/data/</FOLDER_FILE_LOG>
+						<URL_DATABASE>jdbc:h2:mem:test;DB_CLOSE_DELAY=-1</URL_DATABASE>
+						<CONNECT_DRIVER>org.h2.Driver</CONNECT_DRIVER>
+						<CONNECT_USER>sa</CONNECT_USER>
+						<CONNECT_PASSWORD>s$cret</CONNECT_PASSWORD>
 					</environmentVariables>
 				</configuration>
 			</plugin>

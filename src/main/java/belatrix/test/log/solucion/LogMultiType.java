@@ -1,31 +1,39 @@
 package belatrix.test.log.solucion;
 
-import java.util.Arrays;
 import java.util.List;
 
-public class LogMultiType implements Log {
+import belatrix.test.log.solucion.util.LogUtil;
+
+class LogMultiType implements Log {
 
 	private List<Log> log;
 
-	public LogMultiType(Log... log) {
-		if (log == null || log.length == 0) {
-			throw new IllegalArgumentException("Algorithms collection cann't be null!");
+	LogMultiType(List<Log> log) {
+		if (log == null || log.size() == 0) {
+			throw new IllegalArgumentException("La lista de algoritmos log no puede ser null");
 		}
-		this.log = Arrays.asList(log);
+		this.log = log;
 	}
 
 	public void info(String message) {
-		log.forEach(l -> {
+		LogUtil.isNullAndTrim(message);
+		log.parallelStream().forEach(l -> {
 			l.info(message);
 		});
 	}
 
 	public void warr(String message) {
-
+		LogUtil.isNullAndTrim(message);
+		log.parallelStream().forEach(l -> {
+			l.warr(message);
+		});
 	}
 
 	public void error(String message) {
-
+		LogUtil.isNullAndTrim(message);
+		log.parallelStream().forEach(l -> {
+			l.error(message);
+		});
 	}
 
 }

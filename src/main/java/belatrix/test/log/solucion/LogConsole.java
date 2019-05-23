@@ -1,21 +1,32 @@
 package belatrix.test.log.solucion;
 
-public class LogConsole implements Log {
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import belatrix.test.log.solucion.util.LogLevel;
+import belatrix.test.log.solucion.util.LogUtil;
+
+class LogConsole implements Log {
+	private static Logger logger;
+
+	LogConsole(String name) {
+		logger = Logger.getLogger(name);
+		logger.setUseParentHandlers(false);
+		ConsoleHandler ch = new ConsoleHandler();
+		logger.addHandler(ch);
+	}
 
 	public void info(String message) {
-		System.out.println("LogConsole");		
+		logger.log(Level.INFO, LogUtil.getMessage(LogLevel.MESSAGE, message));
 	}
 
 	public void warr(String message) {
-		// TODO Auto-generated method stub
-		
+		logger.log(Level.WARNING, LogUtil.getMessage(LogLevel.WAR, message));
 	}
 
 	public void error(String message) {
-		// TODO Auto-generated method stub
-		
+		logger.log(Level.INFO, LogUtil.getMessage(LogLevel.ERROR, message));
 	}
-
-
 
 }

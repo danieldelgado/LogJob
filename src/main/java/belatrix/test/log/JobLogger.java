@@ -98,6 +98,7 @@ public class JobLogger {
 		if (message && logMessage) {
 			l = l + "message " + DateFormat.getDateInstance(DateFormat.LONG).format(new Date()) + messageText;
 		}
+		// la variable l no es utilizada
 		// B
 		// C
 		if (logToFile) {
