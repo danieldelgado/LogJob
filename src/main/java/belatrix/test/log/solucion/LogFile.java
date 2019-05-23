@@ -25,15 +25,19 @@ class LogFile implements Log {
 	}
 
 	public void info(String message) {
-		logger.log(Level.INFO, LogUtil.getMessage(LogLevel.MESSAGE, message));
+		execute(message, LogLevel.MESSAGE);
 	}
 
 	public void warr(String message) {
-		logger.log(Level.WARNING, LogUtil.getMessage(LogLevel.WAR, message));
+		execute(message, LogLevel.WAR);
 	}
 
 	public void error(String message) {
-		logger.log(Level.INFO, LogUtil.getMessage(LogLevel.ERROR, message));
+		execute(message, LogLevel.ERROR);
+	}
+
+	private void execute(String message, LogLevel type) {
+		logger.log(Level.INFO, LogUtil.getMessage(type, message));
 	}
 
 }
