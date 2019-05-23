@@ -14,7 +14,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class JobLogger {
-	// cuando se instancie un objeto de clase tendra valores estaticos que pueden cambiar durante el tiempo de ejecucion
+	// cuando se instancie un objeto de clase tendra valores estaticos que pueden
+	// cambiar durante el tiempo de ejecucion
 	private static boolean logToFile;
 	private static boolean logToConsole;
 	private static boolean logMessage;
@@ -25,7 +26,8 @@ public class JobLogger {
 	private static Map dbParams; // no cuenta con la definicion de tipos de datos
 	private static Logger logger;
 
-	// se puede usar el patron builder para construir un objeto complejo con distintos usos
+	// se puede usar el patron builder para construir un objeto complejo con
+	// distintos usos
 	public JobLogger(boolean logToFileParam, boolean logToConsoleParam, boolean logToDatabaseParam, boolean logMessageParam, boolean logWarningParam, boolean logErrorParam, Map dbParamsMap) {
 		logger = Logger.getLogger("MyLog");
 		logError = logErrorParam;
@@ -37,8 +39,9 @@ public class JobLogger {
 		dbParams = dbParamsMap;
 	}
 
-	// los metodos no pueden empezar con letra mayuscula o seguir el lineamiento de camel case en el nombrado de metodos y/o variables
-	public static void LogMessage(String messageText, boolean message, boolean warning, boolean error) throws Exception {// como log no deberia arrojar exception checked. Deberia arrojar unchecked 
+	// los metodos no pueden empezar con letra mayuscula o seguir el lineamiento de
+	// camel case en el nombrado de metodos y/o variables
+	public static void LogMessage(String messageText, boolean message, boolean warning, boolean error) throws Exception {// como log no deberia arrojar exception checked. Deberia arrojar unchecked
 		messageText.trim(); // ERROR DE VARIALE PUEDE SER NULL
 		if (messageText == null/* NO ENTRARA POR LA LINEA ANTERIOR */ || messageText.length() == 0) {
 			return;
@@ -56,11 +59,10 @@ public class JobLogger {
 		connectionProps.put("password", dbParams.get("password"));
 
 		// no contaba con la carga de driver de conexion
-		Class.forName("org.h2.Driver");
-		// la conexion debe estar en otra instancia unica y un pool de conexiones. No se debe generar la conexion cada vez que se desea insertar.
-//		connection = DriverManager.getConnection("jdbc:" + dbParams.get("dbms") + "://" + dbParams.get("serverName") + ":" + dbParams.get("portNumber") + "/testdb;AUTO_SERVER=TRUE", connectionProps);
-		connection = DriverManager.getConnection(dbParams.get("URI_CONNECTION").toString(), connectionProps);
-		
+		// la conexion debe estar en otra instancia unica y un pool de conexiones. No se
+		// debe generar la conexion cada vez que se desea insertar.
+		connection = DriverManager.getConnection("jdbc:" + dbParams.get("dbms") + "://" + dbParams.get("serverName") + ":" + dbParams.get("portNumber") + "/testdb;AUTO_SERVER=TRUE", connectionProps);
+
 		int t = 0;
 
 		// A
@@ -74,11 +76,11 @@ public class JobLogger {
 
 		if (warning && logWarning) {
 			t = 3;
-		} 
+		}
 		// A
 		Statement stmt = connection.createStatement();
 
-		String l = null;//esta variable no es utilizada
+		String l = null;// esta variable no es utilizada
 		File logFile = new File(dbParams.get("logFileFolder") + "/logFile.txt");
 		if (!logFile.exists()) {
 			logFile.createNewFile();
@@ -98,7 +100,7 @@ public class JobLogger {
 		if (message && logMessage) {
 			l = l + "message " + DateFormat.getDateInstance(DateFormat.LONG).format(new Date()) + messageText;
 		}
-		// la variable l no es utilizada
+		// la variable l no es utilizada lueego su asignacion entre las condicionalesF
 		// B
 		// C
 		if (logToFile) {
@@ -116,6 +118,8 @@ public class JobLogger {
 			stmt.executeUpdate("insert into Log_Values('" + message + "', " + String.valueOf(t) + ")");
 		}
 		// C
-		//Las secciones A, B y C contiene 3 condiciones lo que aumenta la complejidad ciclomatica y segun el libro de clean code se debe disminuir las condicionales con ayuda de patrones de diseño. 
+		// Las secciones A, B y C contiene 3 condiciones lo que aumenta la complejidad
+		// ciclomatica y segun el libro de clean code se debe disminuir las
+		// condicionales con ayuda de patrones de diseño.
 	}
 }
