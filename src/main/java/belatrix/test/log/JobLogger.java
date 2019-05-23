@@ -26,8 +26,6 @@ public class JobLogger {
 	private static Map dbParams; // no cuenta con la definicion de tipos de datos
 	private static Logger logger;
 
-	// se puede usar el patron builder para construir un objeto complejo con
-	// distintos usos
 	public JobLogger(boolean logToFileParam, boolean logToConsoleParam, boolean logToDatabaseParam, boolean logMessageParam, boolean logWarningParam, boolean logErrorParam, Map dbParamsMap) {
 		logger = Logger.getLogger("MyLog");
 		logError = logErrorParam;
@@ -114,7 +112,7 @@ public class JobLogger {
 		}
 
 		if (logToDatabase) {
-			// no se cuenta con la creacion de la tabla
+			// no se cuenta con la creacion de la tabla, en caso exista la tabala la sentencia fallara por no contar con la estructura
 			stmt.executeUpdate("insert into Log_Values('" + message + "', " + String.valueOf(t) + ")");
 		}
 		// C
